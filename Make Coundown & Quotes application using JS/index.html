@@ -1,221 +1,182 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Countdown & Motivation</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- TItal -->
+    <title> Coundown & Quotes application</title>
+
+    <!-- Link css file -->
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-  <div class="countdown-container">
-    <h1 id="countdown"></h1>
-  </div>
-  <div class="quote-container">
-    <p id="quote"></p>
-  </div>
-  <div id="countdown"></div>
-    <h2>Motivational Quote</h2>
-    <p id="quote"></p>
-  <div class="container">
-    <h1>Countdown Timer</h1>
     
-  </div>
-  <div>
-    <label for="target-date">Target Date:</label>
-    <input type="datetime-local" id="target-date">
-    <button onclick="startCountdown()">Start Countdown</button>
-  </div>
-  
-  <style>
-    body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  background-color: #f4f4f4;
+    <main>
+        <div class="main-container">
+            <h1>Countdown & Quotes</h1>
+            <!-- JavaScript Coundown -->
+            <h2>Countdown Timer</h2>
+            <div class="timer-container">
+                <p id="time">00<span>h</span> : 00<span>m</span> : 00<span>s</span></p>
+            </div>
+            <div class="start-pause_btns">
+                <!-- Start Timer Button -->
+                <button id="startBtn">START</button>
+                <!-- Pause Timer Button -->
+                <button id="pauseBtn">PAUSE</button>
+                <!-- Restart Button -->
+                <button id="resetBtn">RESET</button>
+            </div>
+    
+            <!-- Quotes application -->
+            <h2 style="margin-top: 5%; border-bottom: 2px solid black;">Motivational Quote</h2>
+            <div class="quotes-slider">
+                <p id="quote"></p>
+            </div>
+    
+        </div>
+    </main>
+<style>
+  * {
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-.countdown-container {
-  margin-top: 50px;
-}
-
-.quote-container {
-  margin-top: 20px;
-}
 body {
-  font-family: Arial, sans-serif;
-  background-color: #8379f1;
-  margin: 0;
-  padding: 0;
+    background-color: rgb(233, 94, 192);
 }
 
-.container {
-  max-width: 600px;
-  margin: 50px auto;
-  text-align: center;
+main {
+    display: flex;
+    justify-content: center;
+    height: 85vh;
+    margin-top: 4.5%;
 }
 
-#countdown {
-  font-size: 24px;
-  margin-bottom: 20px;
+.main-container {
+    width: 40%;
+    height: 75vh;
+    border-radius: 10px;
+    display: flex;
+    box-shadow: 0px 0px 10px 5px lightgray;
+    /* justify-content: start; */
+    align-items: center;
+    flex-direction: column;
+    background-color: #6cdaf2;
+}
+
+.main-container h1 {
+    font-size: 35px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.main-container h2 {
+    margin: 15px 0;
+    /* text-decoration: underline; */
+    color: #000;
+}
+
+.timer-container {
+    width: 400px;
+    height: 120px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 3px solid #1a73e8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timer-container p {
+    font-size: 60px;
+}
+
+.timer-container span {
+    font-size: 20px;
+    color: #1a73e8;
+}
+
+.start-pause_btns button {
+    /* display: block; */
+    border: 2px solid #1a73e8;
+    background-color: #1a73e8;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 8px 36px;
+    border-radius: 2px;
+    margin: 18px 8.5px;
+    transition: all .4s;
+}
+
+.start-pause_btns button:hover {
+    background-color: white;
+    color: #1a73e8;
+}
+
+.quotes-slider {
+    width: 90%;
+    padding: 10px;
 }
 
 #quote {
-  font-size: 18px;
-  font-style: italic;
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
 }
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  max-width: 600px;
-  margin: 50px auto;
-  text-align: center;
-}
-
-h1, h2 {
-  color: #333;
-}
-
-#countdown {
-  font-size: 36px;
-  margin-bottom: 20px;
-}
-
-#quote {
-  font-size: 24px;
-}
-
-
-
-  </style>
-
-  <script src="script.js"></script>
+</style>
+    <!-- Link js file -->
+    <script src="script.js"></script>
 </body>
+
 </html>
 <script>
-    // Target date and time for the countdown
-const targetDate = new Date('2024-12-31T00:00:00').getTime();
+  // JavaSctipt Countdown
+let startBtn = document.getElementById("startBtn");
+let pauseBtn = document.getElementById("pauseBtn");
+let resetBtn = document.getElementById("resetBtn")
 
-// Function to update the countdown
-function updateCountdown() {
-  const now = new Date().getTime();
-  const distance = targetDate - now;
+startBtn.addEventListener("click", () => {
+    let sec = 60;
+    timer = setInterval(() => {
+        let time = document.querySelector("p").innerHTML = '00<span>h</span> : 00<span>m</span> : ' + sec +'<span>s</span>';
+        if (sec <= 0) {
+            clearInterval(timer);
+        }
+        sec--;
+    }, 1000)
+})
 
-  // Calculations for days, hours, minutes, and seconds
-  const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  // Display the countdown
-  document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-}
-
-// Update the countdown every second
-setInterval(updateCountdown, 1000);
-
-// Array of motivational quotes
-const quotes = [
-  "The only way to do great work is to love what you do. – Steve Jobs",
-  "Believe you can and you're halfway there. – Theodore Roosevelt",
-  "The future belongs to those who believe in the beauty of their dreams. – Eleanor Roosevelt",
-  "Success is not final, failure is not fatal: It is the courage to continue that counts. – Winston Churchill",
-  "It does not matter how slowly you go as long as you do not stop. – Confucius"
-];
-
-// Function to display a random quote
-function displayQuote() {
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  document.getElementById('quote').innerHTML = quotes[randomIndex];
-}
-
-// Display a quote initially
-displayQuote();
-// Function to start countdown
-function startCountdown() {
-  const targetDate = new Date(document.getElementById('target-date').value).getTime();
-  const countdownElement = document.getElementById('countdown');
-
-  // Update countdown every second
-  const interval = setInterval(function() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-
-    // Check if the target date has passed
-    if (distance < 0) {
-      clearInterval(interval);
-      countdownElement.innerHTML = 'Countdown expired';
-      return;
-    }
-
-    // Calculations for days, hours, minutes, and seconds
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Display the countdown
-    countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  }, 1000);
-
-  // Display a motivational quote
-  displayQuote();
-}
-
-// Function to display a random quote
-function displayQuote() {
-  const quotes = [
-    "The only way to do great work is to love what you do. – Steve Jobs",
-    "Believe you can and you're halfway there. – Theodore Roosevelt",
-    "The future belongs to those who believe in the beauty of their dreams. – Eleanor Roosevelt",
-    "Success is not final, failure is not fatal: It is the courage to continue that counts. – Winston Churchill",
-    "It does not matter how slowly you go as long as you do not stop. – Confucius"
-  ];
-
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  document.getElementById('quote').innerHTML = quotes[randomIndex];
-}
-document.addEventListener('DOMContentLoaded', function() {
-  // Set the target date and time (change this to your desired date and time)
-  const targetDate = new Date('2024-12-31T23:59:59');
-
-  // Function to update countdown timer
-  function updateCountdown() {
-    const now = new Date();
-    const difference = targetDate - now;
-
-    // Calculate time remaining
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-    // Update countdown display
-    document.getElementById('countdown').innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-  }
-
-  // Function to get random motivational quote
-  function getRandomQuote() {
-    const quotes = [
-      "Believe you can and you're halfway there. - Theodore Roosevelt",
-      "The only way to do great work is to love what you do. - Steve Jobs",
-      "Success is not final, failure is not fatal: It is the courage to continue that counts. - Winston Churchill",
-      "It does not matter how slowly you go as long as you do not stop. - Confucius",
-      "The only limit to our realization of tomorrow will be our doubts of today. - Franklin D. Roosevelt",
-      "You are never too old to set another goal or to dream a new dream. - C.S. Lewis"
-    ];
-
-    return quotes[Math.floor(Math.random() * quotes.length)];
-  }
-
-  // Update countdown timer every second
-  setInterval(updateCountdown, 1000);
-
-  // Display random quote
-  document.getElementById('quote').innerHTML = getRandomQuote();
+pauseBtn.addEventListener("click", () => {
+    clearInterval(timer);
 });
 
-</script>
+resetBtn.addEventListener("click", () => {
+    sec = 0;
+    time.innerHTML = '00<span>h</span> : 00<span>m</span> : 0' + sec +'<span>s</span>';
+})
 
+// Quotes Slider
+let arr = [
+    "All our dreams can come true, if we have the courage to pursue them. — Walt Disney",
+    "Don't sit down and wait for the opportunities to come. Get up and make them. — Madam",
+    "I am lucky that whatever fear I have inside me, my desire to win is always stronger",
+    "I am lucky that whatever fear I have inside me, my desire to win is always stronger",
+    "You are never too old to set another goal or to dream a new dream. — C.S. Lewis",
+    "It is during our darkest moments that we must focus to see the light. — Aristotle",
+    "You just gotta keep going and fighting for everything, and one day",
+    
+];
+
+let currentIndex = 0;
+setInterval(() => {
+    currentIndex = (currentIndex + 1) % arr.length;
+    document.querySelector("#quote").innerText = arr[currentIndex];
+}, 3000);
+</script>
