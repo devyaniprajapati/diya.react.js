@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 Statistics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container"><br><br>
+        <h1>COVID-19 Statistics</h1>
+        <div id="stats-container">
+            <div id="total-cases"></div>
+            <div id="total-deaths"></div>
+            <div id="total-recoveries"></div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() 
+        {
+    fetch('https://api.rootnet.in/covid19-in/stats/latest')
+        .then(response => response.json())
+        .then(data => 
+        {
+            const totalCases = data.data.summary.total;
+            const totalDeaths = data.data.summary.deaths;
+            const totalRecoveries = data.data.summary.discharged;
+
+            document.getElementById('total-cases').innerHTML = `<h2>Total Cases</h2><p>${totalCases}</p>`;
+            document.getElementById('total-deaths').innerHTML = `<h2>Total Deaths</h2><p>${totalDeaths}</p>`;
+            document.getElementById('total-recoveries').innerHTML = `<h2>Total Recoveries</h2><p>${totalRecoveries}</p>`;
+        })
+        .catch(error => console.log('Error fetching data:', error));
+});
+
+    </script>
+</body>
+</html>
