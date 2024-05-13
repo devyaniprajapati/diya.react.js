@@ -3,36 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COVID-19 Statistics</title>
+    <title>COVID-19 Data </title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container"><br><br>
-        <h1>COVID-19 Statistics</h1>
-        <div id="stats-container">
-            <div id="total-cases"></div>
-            <div id="total-deaths"></div>
-            <div id="total-recoveries"></div>
-        </div>
+    
+    <div class="video-main-container  ">
+        <h1 style="text-align: center; margin-top: 2%; color: white; ">COVID-19 Regional</h1>
+        <video   width="100%" autoplay loop muted>
+            <source src="covid-animation.mp4" type="video/mp4">
+        </video>
+        <video   width="100%" autoplay loop muted>
+            <source src="covid-animation.mp4" type="video/mp4">
+        </video>
+        <video   width="100%" autoplay loop muted>
+            <source src="covid-animation.mp4" type="video/mp4">
+        </video>
+        <video   width="100%" autoplay loop muted>
+            <source src="covid-animation.mp4" type="video/mp4">
+        </video>
+        
+        <div id="main" style="text-align: center;">
+            <table id="table-main">
+                <thead>
+                <tr>
+                    <th>Region</th> 
+                    <th> Indian Cases</th>
+                    <th>Foreign Cases</th>
+                    <th>Discharged</th>
+                    <th>Deaths</th>
+                    <th>Total Confirmed</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+zzz
+            </tbody>
+        </table>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() 
+    </div>
+   <script>
+       
+       function FetchData()
+       {
+           fetch('https://api.rootnet.in/covid19-in/stats/latest')
+           .then((res)=>res.json())
+           .then((data)=>CardList(data.data.regional)) 
+           .catch((err)=>console.log(err))
+        }
+        FetchData();
+        
+        function CardList(data)
         {
-    fetch('https://api.rootnet.in/covid19-in/stats/latest')
-        .then(response => response.json())
-        .then(data => 
-        {
-            const totalCases = data.data.summary.total;
-            const totalDeaths = data.data.summary.deaths;
-            const totalRecoveries = data.data.summary.discharged;
+            let main=document.getElementById("table-body")
 
-            document.getElementById('total-cases').innerHTML = `<h2>Total Cases</h2><p>${totalCases}</p>`;
-            document.getElementById('total-deaths').innerHTML = `<h2>Total Deaths</h2><p>${totalDeaths}</p>`;
-            document.getElementById('total-recoveries').innerHTML = `<h2>Total Recoveries</h2><p>${totalRecoveries}</p>`;
+        let store= data.map((el)=>{
+            return `
+            <tr>
+                        <td>${el.loc}</td>
+                        <td>${el.confirmedCasesIndian}</td>
+                        <td>${el.confirmedCasesForeign}</td>
+                        <td>${el.discharged}</td>
+                        <td>${el.deaths}</td>
+                        <td>${el.totalConfirmed}</td>
+                    </tr>
+            `
+            
         })
-        .catch(error => console.log('Error fetching data:', error));
-});
 
-    </script>
+            main.innerHTML=store.join("")
+        }
+
+    </script> 
+
 </body>
 </html>
